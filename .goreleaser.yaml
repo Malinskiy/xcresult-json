@@ -1,0 +1,34 @@
+project_name: xcresult-json
+builds:
+  - binary: xcresult-json
+    main: dummy.go
+    goos:
+      - darwin
+    goarch:
+      - amd64
+      - arm64
+    hooks:
+      # This is called for every architecture.
+      # eg: ./build.sh linux_amd64 xcresult-json
+      post: 
+        - ./build.sh "{{ .Target }}" "{{ .ProjectName }}"
+universal_binaries:
+- replace: true
+archives:
+  - format: tar.gz
+    files:
+      - README.md
+      - LICENSE
+checksum:
+  name_template: 'checksums.txt'
+release:
+  disable: false
+brews:
+  - tap:
+      owner: Malinskiy
+      name: homebrew-tap
+      branch: master
+      token: "{{ .Env.HOMEBREW_TAP_GITHUB_TOKEN }}"
+    homepage: "https://github.com/Malinskiy/xcresult-json"
+    description: "Transform xcresult into machine-readable format for consumption outside of Apple's ecosystem"
+    license: "GPL-2.0-only"
