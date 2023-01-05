@@ -32,3 +32,4 @@ brews:
     homepage: "https://github.com/Malinskiy/xcresult-json"
     description: "Transform xcresult into machine-readable format for consumption outside of Apple's ecosystem"
     license: "GPL-2.0-only"
+    folder: Formula
