@@ -1,13 +1,13 @@
 extern crate plist;
 
-mod xcresult;
 mod cas;
+mod convert_interactor;
 mod test_result;
+mod xcresult;
 
-use std::path::PathBuf;
 use clap::{Parser, Subcommand};
-use serde_json::Value;
-use crate::{test_result::TestResult, cas::ContentAddressableStorage};
+use convert_interactor::ConvertInteractor;
+use std::path::PathBuf;
 
 #[derive(Parser)]
 #[command(author, version, about, long_about = None)]
@@ -32,18 +32,15 @@ fn main() {
 
     let input = cli.input;
 
+    simple_logger::SimpleLogger::new().env().init().unwrap();
+
     match &cli.command {
         Some(Commands::Convert { output }) => {
-            let test_result = TestResult::new(&input.to_string_lossy());
-            let xcresult = test_result.read().expect("invalid Info.plist");
-            let root_id = xcresult.root_id;
-            let root_obj = test_result.retrieve(&root_id.hash, &cas::ObjectType::JSON);
-            let json = root_obj.unwrap();
-            let mut v: Value = serde_json::from_str(&json).unwrap();
-            let converted = test_result.convert(&mut v);
-            println!("{}", converted.expect("convertion failed"));
+            let interactor = ConvertInteractor::new();
+            interactor
+                .execute(&input, output)
+                .expect("conversion failed")
         }
         None => {}
     }
 }
-
