@@ -19,6 +19,12 @@ jobs:
         with:
           fetch-depth: 0
       - run: git fetch --force --tags
+      - uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          target: aarch64-apple-darwin
+          toolchain: stable
+          override: true
       - uses: goreleaser/goreleaser-action@v4
         with:
           distribution: goreleaser

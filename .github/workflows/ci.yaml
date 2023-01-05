@@ -31,6 +31,22 @@ jobs:
       - uses: actions-rs/cargo@v1
         with:
           command: test
+  
+  build:
+    name: Build
+    runs-on: macos-12
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          target: aarch64-apple-darwin
+          toolchain: stable
+          override: true
+      - run: ./build.sh "darwin_amd64_v1" "xcresult-json"
+        name: Build amd64
+      - run: ./build.sh "darwin_arm64" "xcresult-json"
+        name: Build aarch64
 
   fmt:
     name: Rustfmt
