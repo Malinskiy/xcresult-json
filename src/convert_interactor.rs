@@ -73,7 +73,7 @@ mod tests {
             .join("fixture")
             .join("xcresult")
             .join(id);
-        
+
         let temp_output = tempfile::tempdir().unwrap();
 
         let result = interactor.execute(&project_dir, temp_output.path());
