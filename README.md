@@ -8,6 +8,15 @@ Assuming `/path/to/x.xcresult` is a valid path to your test results:
 $ xcresult-json --input /path/to/x.xcresult convert --output /path/to/out
 ```
 
+# Installation
+
+```
+$ brew tap malinskiy/tap
+$ brew install xcresult-json
+```
+
+or you can manually download a package from [GitHub Releases](https://github.com/Malinskiy/xcresult-json/releases).
+
 # Requirements
 This tool is designed to run only within Apple's macOS environment.
 
